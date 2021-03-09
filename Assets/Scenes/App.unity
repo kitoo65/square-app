@@ -1785,6 +1785,7 @@ MonoBehaviour:
   animationTime: 1
   actionText: {fileID: 769483666}
   buttonAudioClip: {fileID: 8300000, guid: d32e2802accd390488554eafb07f3b40, type: 3}
+  squareAudioClip: {fileID: 8300000, guid: 2d4e814ea5f793e4b9beb0770c839b40, type: 3}
   upperPosition: {fileID: 1151506201}
   middlePosition: {x: 0, y: 0, z: 0}
   leftPosition: {fileID: 555406890}
