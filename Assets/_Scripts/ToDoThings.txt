@@ -16,6 +16,7 @@ Detalles a implementar:
 	- Boton "Play Animation", implementar funcionalidad. Done
 	- El texto "Action Text" deberia actualizarse mientras se realiza una accion. Done
 	- Definir si para Square conviene cambiar el tipo a un SpriteRender. No, si es UI, tiene que ser IMAGE.
+	Si es spriteRenderer, estaria listo para hacer una animacion de sprite ya sea un swap de sprites, o 
 - Extras
 	- Generar una nueva Scene "Splash" y transicionar de esta a la Scene "App". Done
 	- Implementar eventos para cuando una accion termina. 

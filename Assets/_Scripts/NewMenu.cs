@@ -20,6 +20,11 @@ public class NewMenu : MonoBehaviour
     public Vector3 middlePosition;
     public RectTransform leftPosition;
     public RectTransform rightPosition;
+    [Header("Buttons")]
+    public Button jumpButton;
+    public Button spinButton;
+    public Button pingPongButton;
+    public Button animButton;
 
     //Lo que utilice para realizar la tarea, fue un plugin llamado "DOTween". Permite hacer animaciones en la UI y en Unity de forma ordenada y controlada.
     //Para chequear funcionalidades, aqui esta el link a la documentacion de DOTween. http://dotween.demigiant.com/documentation.php
@@ -31,7 +36,8 @@ public class NewMenu : MonoBehaviour
         middlePosition = squareRectTransform.position;
         audioSourceComponent = GetComponent<AudioSource>();
         state = State.notActing;
-        
+        pingPongButton.interactable = animButton.interactable = jumpButton.interactable = spinButton.interactable = true;
+
     }
     
     public void TriggerAnimation(string animation)
@@ -39,6 +45,7 @@ public class NewMenu : MonoBehaviour
         audioSourceComponent.PlayOneShot(buttonAudioClip);
         if (state == State.notActing)
         {
+            pingPongButton.interactable = animButton.interactable = jumpButton.interactable = spinButton.interactable = false;
             StartCoroutine(Animating(animation));
         }
     }
@@ -51,27 +58,24 @@ public class NewMenu : MonoBehaviour
             actionText.text = anim;
             Sequence jumpSequence = DOTween.Sequence(); //La secuencia, es un conjunto de animaciones, la forma en la que se concatenan, es poniendo .Append al final de cada una. 
             //Tambien se pueden concatenar animaciones de forma paralela, con .Join (se reproducen en simultaneo)
-            jumpSequence.Append(squareRectTransform.DOMove(upperPosition.position, animationTime)).Append(squareRectTransform.DOMove(middlePosition, animationTime));
+            jumpSequence.Append(squareRectTransform.DOMove(upperPosition.position, 0.3f)).Append(squareRectTransform.DOMove(middlePosition, 0.3f));
             yield return jumpSequence.WaitForCompletion(); //Este estado espera a que finalice y muera la animacion.
-            state = State.notActing;
-            actionText.text = "Insert Action";
+            
         }
         if (anim == "Rotating")
         {
             actionText.text = anim;
             Tween squareRotateZ = squareRectTransform.DORotate(new Vector3(0, 0, 360), animationTime, RotateMode.FastBeyond360);
             yield return squareRotateZ.WaitForCompletion();
-            state = State.notActing;
-            actionText.text = "Insert Action";
+            
         }
         if (anim == "PingPoning")
         {
             actionText.text = anim;
             Sequence pingPongSequence = DOTween.Sequence(); 
-            pingPongSequence.Append(squareRectTransform.DOMove(leftPosition.position, animationTime)).Append(squareRectTransform.DOMove(rightPosition.position, animationTime)).Append(squareRectTransform.DOMove(middlePosition, animationTime));
+            pingPongSequence.Append(squareRectTransform.DOMove(leftPosition.position, 0.4f)).Append(squareRectTransform.DOMove(rightPosition.position, 0.4f)).Append(squareRectTransform.DOMove(middlePosition, 0.3f));
             yield return pingPongSequence.WaitForCompletion();
-            state = State.notActing;
-            actionText.text = "Insert Action";
+            
         }
         if (anim == "Animation")
         {
@@ -81,10 +85,14 @@ public class NewMenu : MonoBehaviour
             audioSourceComponent.PlayOneShot(squareAudioClip);
             yield return animationSequence.WaitForCompletion();
             squareRectTransform.DOScale(new Vector3(1,1,1),0.2f);
-            state = State.notActing;
-            actionText.text = "Insert Action";
-
+            
         }
+        yield return null;
+        pingPongButton.interactable = animButton.interactable = jumpButton.interactable = spinButton.interactable = true;
+        state = State.notActing;
+        actionText.text = "Insert Action";
+
+       
     }
 
 
