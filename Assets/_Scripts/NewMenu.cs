@@ -87,7 +87,6 @@ public class NewMenu : MonoBehaviour
             squareRectTransform.DOScale(new Vector3(1,1,1),0.2f);
             
         }
-        yield return null;
         pingPongButton.interactable = animButton.interactable = jumpButton.interactable = spinButton.interactable = true;
         state = State.notActing;
         actionText.text = "Insert Action";
